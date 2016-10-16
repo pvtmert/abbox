@@ -1046,3 +1046,6 @@ table.list { width:100%; border-collapse:collapse; }
 	font-weight:400;
 }
 .list th { font-weight:400; font-style:italic; }
+
+#page .uinfo .lhand A, #page .uinfo .rhand A { border-radius:16px; color:white; background-color:#ff5722; text-decoration:none; padding:1px 6px; }
+#page .uinfo .lhand A:hover, #page .uinfo .rhand A:hover { background-color:#ffab91; }

@@ -7,10 +7,11 @@
 	header("content-type: text/plain");
 	if(!isset($_GET["hash"])) exit(0);
 	set_time_limit(120);
-	$file = ("../../uploads/cache/".$_GET["hash"]);
+	$file = ("../../uploads/cache/".$_GET["hash"].".gz");
 	if(file_exists($file) && !isset($_GET["raw"]))
 	{
-		header("location: /stlcache/".$_GET["hash"]);
+		//header("location: /stlcache/".$_GET["hash"]);
+		readgzfile($file);
 		exit(0);
 		/*
 		header("content-length: ".filesize($file));
@@ -28,15 +29,12 @@
 		*/
 	}
 	$file = ("../../uploads/stl/".$_GET["hash"]);
-	if(isset($_GET["raw"]) && file_exists($file))
-	{
-		header("content-length: ".filesize($file));
-		readfile($file);
-		exit(0);
-	}
-
-	exec("bash compiler.sh ".("../../uploads/stl/".$_GET["hash"])." ".("../../uploads/cache/".$_GET["hash"]));
-	readfile( ("../../uploads/cache/".$_GET["hash"]) );
+//	if(isset($_GET["raw"]) && file_exists($file))
+//		header("content-length: ".filesize($file));
+//	else
+//		exec("bash compiler.sh ".escapeshellarg("../../uploads/stl/".$_GET["hash"])." ".escapeshellarg("../../uploads/cache/".$_GET["hash"]));
+//	readgzfile($file);
+	readfile($file);
 	exit(0);
 
 	//$_GET["file"] = $file;

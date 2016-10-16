@@ -63,7 +63,7 @@
 		if(isset($_FILES["s"]))
 		{
 			move_uploaded_file($_FILES["s"]["tmp_name"],"uploads/stl/".$hash);
-			exec("bash thingiview/php/compiler.sh ".("uploads/stl/".$_GET["hash"])." ".("uploads/cache/".$_GET["hash"]));
+			exec("bash thingiview/php/compiler.sh ".escapeshellarg("uploads/stl/".$_GET["hash"])." ".escapeshellarg("uploads/cache/".$_GET["hash"]));
 		}
 		for($i=0;$i<sizeof($_FILES["i"]["error"]);$i++)
 		{
@@ -384,6 +384,7 @@ function parser(e) {
 			pxsz = 20;
 			pysz = 20;
 		</script>
+		<script type="text/javascript" src="ungz.min.js"></script>
 		<script type="text/javascript" src="thingiview/javascripts/Three.js"></script>
 		<script type="text/javascript" src="thingiview/javascripts/plane.js"></script>
 		<script type="text/javascript" src="thingiview/javascripts/thingiview.js"></script>
@@ -503,7 +504,7 @@ function loader() {
 }
 <?php
 	$c = "";
-	$sz = filesize("stlcache/".$_GET["hash"]);
+	$sz = filesize("stlcache/".$_GET["hash"].".gz");
 	switch(true)
 	{
 		case ($sz > pow(2,20)):
@@ -543,12 +544,12 @@ window.onload = function() {
 	<div id=null ></div>
 	</body>
 	<?php
-		$file = ("stlcache/".$_GET["hash"]);
+		$file = ("stlcache/".$_GET["hash"].".gz");
 		if(file_exists($file) && !isset($_GET["raw"]) && false)
 		{
 			echo "<script type='text/javascript' >\n";
 			echo "var buf = eval('";
-			readfile($file);
+			readfgzile($file);
 			echo "');";
 			echo "</script>\n";
 		}
